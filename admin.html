@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель</title>
+    <script src="js/admin.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Страница входа -->
+    <div id="loginPage" class="admin-login-page">
+        <div class="admin-login-container">
+            <h1>Вход в админ-панель</h1>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="admin-form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" required>
+                    <div class="admin-error-message" id="errorMessage">Неверный пароль</div>
+                    <div class="admin-success-message" id="successMessage">Успешная авторизация</div>
+                </div>
+                <button type="submit" class="admin-login-btn">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Админ-панель -->
+    <div class="admin-layout">
+        <div class="sidebar">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img width="190px" height="134px" src="icons/logo.svg" alt="Логотип">
+                </a>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="showTab('houseTypes')">
+                    <i class="fas fa-home"></i> Типы домов
+                </button>
+                <button class="nav-button" onclick="showTab('floors')">
+                    <i class="fas fa-layer-group"></i> Этажность
+                </button>
+                <button class="nav-button" onclick="showTab('roofs')">
+                    <i class="fas fa-chevron-up"></i> Крыши
+                </button>
+                <button class="nav-button" onclick="showTab('materials')">
+                    <i class="fas fa-brick"></i> Материалы
+                </button>
+                <button class="nav-button" onclick="showTab('foundations')">
+                    <i class="fas fa-square"></i> Фундаменты
+                </button>
+                <button class="nav-button" onclick="showTab('facades')">
+                    <i class="fas fa-building"></i> Фасады
+                </button>
+                <button class="nav-button" onclick="showTab('electrical')">
+                    <i class="fas fa-bolt"></i> Электрика
+                </button>
+                <button class="nav-button" onclick="showTab('wallFinishes')">
+                    <i class="fas fa-paint-roller"></i> Отделка стен
+                </button>
+                <button class="nav-button" onclick="showTab('additions')">
+                    <i class="fas fa-plus-circle"></i> Доп. опции
+                </button>
+                <button class="nav-button active" onclick="showTab('requests')">
+                    <i class="fas fa-list"></i> Заявки
+                </button>
+            </div>
+            <div class="logout-container">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Выйти
+                </button>
+            </div>
+        </div>
+        <div class="main-content">
+            <!-- Добавляем контейнеры для каждой секции -->
+            <div id="houseTypesTab" class="tab-content active">
+                <div class="section-header">
+                    <h2>Типы домов</h2>
+                    <button class="btn btn-primary" onclick="showAddHouseTypeForm()">
+                        <i class="fas fa-plus"></i> Добавить тип дома
+                    </button>
+                </div>
+                <div id="houseTypesContainer" class="grid"></div>
+            </div>
+
+            <div id="floorsTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Этажность</h2>
+                    <button class="btn btn-primary" onclick="showAddFloorForm()">
+                        <i class="fas fa-plus"></i> Добавить этаж
+                    </button>
+                </div>
+                <div id="floorsContainer" class="grid"></div>
+            </div>
+
+            <div id="roofsTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Крыши</h2>
+                    <button class="btn btn-primary" onclick="showAddRoofForm()">
+                        <i class="fas fa-plus"></i> Добавить крышу
+                    </button>
+                </div>
+                <div id="roofsContainer" class="grid"></div>
+            </div>
+
+            <div id="materialsTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Материалы</h2>
+                    <button class="btn btn-primary" onclick="showAddMaterialForm()">
+                        <i class="fas fa-plus"></i> Добавить материал
+                    </button>
+                </div>
+                <div id="materialsContainer" class="grid"></div>
+            </div>
+
+            <div id="foundationsTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Фундаменты</h2>
+                    <button class="btn btn-primary" onclick="showAddFoundationForm()">
+                        <i class="fas fa-plus"></i> Добавить фундамент
+                    </button>
+                </div>
+                <div id="foundationsContainer" class="grid"></div>
+            </div>
+
+            <div id="facadesTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Фасады</h2>
+                    <button class="btn btn-primary" onclick="showAddFacadeForm()">
+                        <i class="fas fa-plus"></i> Добавить фасад
+                    </button>
+                </div>
+                <div id="facadesContainer" class="grid"></div>
+            </div>
+
+            <div id="electricalTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Электрика</h2>
+                    <button class="btn btn-primary" onclick="showAddElectricalForm()">
+                        <i class="fas fa-plus"></i> Добавить пакет
+                    </button>
+                </div>
+                <div id="electricalContainer" class="grid"></div>
+            </div>
+
+            <div id="wallFinishesTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Отделка стен</h2>
+                    <button class="btn btn-primary" onclick="showAddWallFinishForm()">
+                        <i class="fas fa-plus"></i> Добавить отделку
+                    </button>
+                </div>
+                <div id="wallFinishesContainer" class="grid"></div>
+            </div>
+
+            <div id="additionsTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Дополнительные опции</h2>
+                    <button class="btn btn-primary" onclick="showAddAdditionForm()">
+                        <i class="fas fa-plus"></i> Добавить опцию
+                    </button>
+                </div>
+                <div id="additionsContainer" class="grid"></div>
+            </div>
+
+            <div id="requestsTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Заявки</h2>
+                    <button class="btn btn-primary" onclick="showAddRequestForm()">
+                        <i class="fas fa-plus"></i> Добавить заявку
+                    </button>
+                </div>
+                <div id="requestsContainer" class="requests-container"></div>
+            </div>
+        </div>
+    </div>
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <span id="notificationMessage"></span>
+            <button class="notification-close" onclick="closeNotification()">×</button>
+        </div>
+    </div>
+</body>
+</html>
